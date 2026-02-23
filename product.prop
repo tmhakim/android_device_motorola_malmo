@@ -1,18 +1,27 @@
-# e-SIM
-masterclear.allow_retain_esim_profiles_after_fdr=true
-ro.telephony.esim_slot_id=1
+# Audio
+audio.record.delay=100
+audio.sys.mute.latency.factor=2
+audio.sys.noisy.broadcast.delay=500
+audio.sys.offload.pstimeout.secs=3
+audio.sys.routing.latency=0
+ro.audio.monitorWindowRotation=true
+ro.audio.relative_volume=true
 
-# Google
-ro.opa.device_model_id=motorola-bangkk
+# Media
+media.stagefright.audio.deep=false
 
-# Motorola
-ro.mot.build.customerid=global
+# Miscellaneous
+persist.debug.perfetto.persistent_sysui_tracing_for_bugreport=1
+persist.wm.extensions.enabled=true
+ro.com.android.mobiledata=false
+ro.config.alarm_alert=Hassium.ogg
+ro.config.notification_sound=Argon.ogg
+ro.config.ringtone=Orion.ogg
+ro.product.build.16k_page.enabled=false
+ro.product.build.version.sdk_minor=0
+ro.product.cpu.pagesize.max=16384
+ro.product.page_size=4096
+ro.support_one_handed_mode=true
+ro.vendor.radio.imei.sv=13
+setupwizard.feature.day_night_mode_enabled=true
 
-# eBPF
-ro.bpf.kver_override=5.10.239
-
-# IMS
-ro.qcom.ims.use_moto_vt_ext=true
-
-# System server
-arm64.memtag.process.system_server=off
