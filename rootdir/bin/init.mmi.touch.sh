@@ -187,10 +187,11 @@ wait_for_poweron()
 setup_permissions()
 {
 	local bootmode=$(getprop $bootmode_property 2> /dev/null)
+	local selinux=$(getprop ro.boot.selinux 2> /dev/null)
 	local key_path
 	local key_files
 	local entry
-	if [ "$bootmode" == "mot-factory" ]; then
+	if [[ ("$selinux" == "permissive") || ("$bootmode" == "mot-factory") ]]; then
 		debug "loosen permissions to $touch_vendor files"
 		case $touch_vendor in
 			  samsung)	key_path="/sys/devices/virtual/sec/sec_ts/"
@@ -199,6 +200,9 @@ setup_permissions()
 						[ -f $touch_path/size ] && chown root:vendor_tcmd $touch_path/size
 						[ -f $touch_path/address ] && chown root:vendor_tcmd $touch_path/address
 						[ -f $touch_path/write ] && chown root:vendor_tcmd $touch_path/write
+						;;
+			   pixart)	key_path="/sys/bus/i2c/devices/1-0033"
+						key_files="selftest selftest_bin"
 						;;
 			synaptics)	key_path=$touch_path
 						key_files=$(prepend f54 `ls $touch_path/f54/ 2>/dev/null`)
@@ -597,6 +601,55 @@ process_touch_instance()
 	setup_permissions
 }
 
+
+set_ro_hw_properties_exponent_panel()
+{
+	local panelname_path=/sys/class/drm/card0-DSI-1/panelName
+	local panelname_cli_path=/sys/class/drm/card0-DSI-2/panelName
+	local bl_exponent_path=/sys/class/drm/card0-DSI-1/panelBLExponent
+	local bl_exponent_prop=ro.vendor.hw.curve
+
+	local prim_declare_path=/sys/class/drm/card0-DSI-1/panelDeclare
+	local cli_declare_path=/sys/class/drm/card0-DSI-2/panelDeclare
+	local prim_declare_prop=ro.vendor.hw.primary_declare
+	local cli_declare_prop=ro.vendor.hw.cli_declare
+
+	local panelname
+	local wait_cnt=0
+	lid_property=ro.vendor.mot.hw.lid
+	lid=1
+
+	has_lid=$(getprop $lid_property 2> /dev/null)
+	while [ "$wait_cnt" -lt 15 ]; do
+		if [ -e $panelname_path ]; then
+			panelname=$(cat $panelname_path)
+			panelBLExponent=$(cat $bl_exponent_path)
+			setprop $bl_exponent_prop "$panelBLExponent"
+			notice "setprop $bl_exponent_prop as $panelBLExponent for panel [$panelname]"
+			if [ -e $prim_declare_path ]; then
+			    prim_declare_str=$(cat $prim_declare_path)
+			    setprop $prim_declare_prop "$prim_declare_str"
+			    notice "setprop $prim_declare_prop as $prim_declare_str for panel [$panelname]"
+			fi
+			if [ $has_lid -eq $lid ]
+			then
+			    if [ -e $panelname_cli_path -a -e $cli_declare_path ] ; then
+			        panelname=$(cat $panelname_cli_path)
+			        cli_declare_str=$(cat $cli_declare_path)
+			        setprop $cli_declare_prop "$cli_declare_str"
+			        notice "setprop $cli_declare_prop as $cli_declare_str for panel [$panelname]"
+			        break;
+			    fi
+			else
+			    break;
+			fi
+		fi
+		notice "waiting for panelname, wait_cnt is $wait_cnt, has_lid is $has_lid"
+		sleep 1;
+		wait_cnt=$((wait_cnt+1))
+	done
+}
+
 # Main starts here
 query_panel_info
 load_driver_modules
@@ -616,7 +669,16 @@ for touch_instance in $(ls $touch_class_path); do
 	process_touch_instance &
 done
 
+if [ -f /sys/bus/i2c/devices/1-0033/vendor ]; then
+	touch_vendor=$(cat /sys/bus/i2c/devices/1-0033/vendor)
+	setup_permissions
+fi
+
 # check if need to reload modules
+
+# set exponent backlight property
+set_ro_hw_properties_exponent_panel
+
 wait
 debug "all background processes completed"
 

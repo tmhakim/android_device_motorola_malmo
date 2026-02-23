@@ -8,21 +8,21 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 TARGET_SUPPORTS_OMX_SERVICE := false
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
-# Inherit from bangkk device
-$(call inherit-product, device/motorola/bangkk/device.mk)
+# Inherit from malmo device
+$(call inherit-product, device/motorola/malmo/device.mk)
 
 # Inherit some common Lineage stuff.
 $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
-PRODUCT_NAME := lineage_bangkk
-PRODUCT_DEVICE := bangkk
+PRODUCT_NAME := lineage_malmo
+PRODUCT_DEVICE := malmo
 PRODUCT_MANUFACTURER := motorola
 PRODUCT_BRAND := motorola
-PRODUCT_MODEL := moto g84 5G
+PRODUCT_MODEL := moto g85 5G
 
 PRODUCT_GMS_CLIENTID_BASE := android-motorola
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    BuildDesc="bangkk_g-user 15 V1TCS35H.88-16-1 d09472-674756 release-keys MV-301" \
-    BuildFingerprint=motorola/bangkk_g/bangkk:15/V1TCS35H.88-16-1/d09472-674756:user/release-keys \
-    DeviceProduct=bangkk_g
+    BuildDesc="malmo_g-user 15 V1UO35M-V1-ST11.1 aeaba6 release-keys" \
+    BuildFingerprint=motorola/malmo_g/msi:15/V1UO35M-V1-ST11.1/aeaba6:user/release-keys
+    DeviceProduct=malmo_g

@@ -362,29 +362,48 @@ set_ro_hw_properties_upgrade()
 	done
 }
 
-set_ro_hw_properties()
+set_ro_hw_property()
 {
+	local hwtag=$1
 	local utag_path
 	local utag_name
 	local prop_prefix
 	local utag_value
 	local verify
-	for hwtag in $(find $hw_mp -name '.system'); do
-		debug "path $hwtag has '.system' in its name"
-		prop_prefix=$(cat $hwtag/ascii)
-		verify=${prop_prefix%.}
-		# esure property ends with '.'
-		if [ "$prop_prefix" == "$verify" ]; then
-			prop_prefix="$prop_prefix."
-			debug "added '.' at the end of [$prop_prefix]"
 
-                fi
-		utag_path=${hwtag%/*}
-		utag_name=${utag_path##*/}
-		utag_value=$(cat $utag_path/ascii)
-		setprop $prop_prefix$utag_name "$utag_value"
-		notice "$prop_prefix$utag_name='$utag_value'"
+	debug "path $hwtag has '.system' in its name"
+	prop_prefix=$(cat $hwtag/ascii)
+	verify=${prop_prefix%.}
+	# esure property ends with '.'
+	if [ "$prop_prefix" == "$verify" ]; then
+		prop_prefix="$prop_prefix."
+		debug "added '.' at the end of [$prop_prefix]"
+        fi
+	utag_path=${hwtag%/*}
+	utag_name=${utag_path##*/}
+	utag_value=$(cat $utag_path/ascii)
+	setprop $prop_prefix$utag_name "$utag_value"
+	notice "$prop_prefix$utag_name='$utag_value'"
+}
+
+set_ro_hw_properties()
+{
+
+	for hwtag in $(find $hw_mp -name '.system'); do
+		set_ro_hw_property $hwtag &
 	done
+}
+
+set_ro_vendor_incremental()
+{
+	local vendor_incremental="ro.vendor.build.version.incremental"
+	local vendor_incremental_value
+	local fetch_prop="ro.build.version.incremental"
+        local fetch_value=$(getprop $fetch_prop)
+
+        [ -z "$fetch_value" ] && prefetch_from_file $fetch_prop vendor_incremental_value
+	setprop $vendor_incremental "$vendor_incremental_value"
+        notice "$vendor_incremental='$vendor_incremental_value'"
 }
 
 smart_value()
@@ -411,9 +430,9 @@ url_style_off()
 	local __arg=$1
 	local value=$2
 	if [[ $value == *%* ]]; then
-		value=$(echo $value | sed 's/%20/ /g')
-		value=$(echo $value | sed 's/%28/\(/g')
-		value=$(echo $value | sed 's/%29/\)/g')
+		value=$(echo ${value//%20/ })
+		value=$(echo ${value//%28/\(})
+		value=$(echo ${value//%29/\)})
 	fi
 	eval $__arg='$value'
 }
@@ -513,6 +532,20 @@ append_match()
 	done
 }
 
+export_match()
+{
+	local prop_list=$1
+	local prop_value="$2"
+	local dest_prop
+	local IFS=','
+	# example: export="ro.vendor.product.display,ro.vendor.product.display.plain_text"
+	for dest_prop in $prop_list; do
+		fetch_prop=${dest_prop}
+		setprop $fetch_prop "$prop_value"
+		debug "export $fetch_prop='$prop_value'"
+	done
+}
+
 process_mappings()
 {
 	local pname=""
@@ -548,12 +581,12 @@ process_mappings()
 		[ "$pappend" ] && append_match $pappend "$matched_val"
 		if [ "$matched_val" ]; then
 			if [ "$pexport" ]; then
-				setprop $pexport "$matched_val"
+				export_match $pexport "$matched_val"
 				notice "exporting '$matched_val' into property $pexport"
 			fi
 		elif [ "$pexport" -a "$pdefault" ]; then
 			# if match is not found, proceed with default
-			setprop $pexport "$pdefault"
+			export_match $pexport "$pdefault"
 			notice "defaulting '$pdefault' into property $pexport"
 		fi
 
@@ -707,6 +740,8 @@ if [ "$xml_version" != "$version_fs" ]; then
 	# update procfs version
 	[ -d $hw_mp/$ver_utag ] && $(echo "$xml_version" > $hw_mp/$ver_utag/ascii)
 fi
+
+set_ro_vendor_incremental &
 
 set_ro_hw_properties
 
