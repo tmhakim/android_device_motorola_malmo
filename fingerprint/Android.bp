@@ -17,7 +17,6 @@ cc_binary {
         "android.hardware.biometrics.fingerprint@2.1",
         "android.hardware.biometrics.fingerprint@2.2",
         "android.hardware.biometrics.fingerprint@2.3",
-        "vendor.egistec.hardware.fingerprint@4.0",
+        "com.motorola.hardware.biometric.fingerprint@1.0",
     ],
-    header_libs: ["generated_kernel_headers"]
 }
