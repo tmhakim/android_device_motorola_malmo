@@ -248,3 +248,24 @@ on moto-charger
 
 on property:ro.boot.secure_hardware=1 && property:ro.build.type=user && property:vendor.post_boot.parsed=1
     write /proc/sys/walt/panic_on_walt_bug 0x4544DE18
+
+service nqnfcinfo /vendor/bin/nqnfcinfo
+    class late_start
+    group nfc
+    user system
+    oneshot
+
+on property:vendor.qti.nfc.chipid=0xca
+    setprop persist.vendor.nfc.config_file_name libnfc-PN560_38_4MHZ.conf
+    start vendor.nfc_hal_service
+
+on property:vendor.qti.nfc.chipid=0xc1
+    setprop persist.vendor.nfc.config_file_name libnfc-SN220_38_4MHZ_UICC.conf
+    start vendor.nfc_hal_service
+
+service vendor.nfc_hal_service /vendor/bin/hw/android.hardware.nfc-service.nxp
+    override
+    class early_hal
+    user nfc
+    group nfc drmrpc system
+    disabled
