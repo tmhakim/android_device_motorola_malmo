@@ -12,11 +12,11 @@
         <fqname>@2.3::IBiometricsFingerprint/default</fqname>
     </hal>
     <hal format="hidl">
-        <name>vendor.egistec.hardware.fingerprint</name>
+        <name>vendor.goodix.hardware.biometrics.fingerprint</name>
         <transport>hwbinder</transport>
-        <version>4.0</version>
+        <version>2.1</version>
         <interface>
-            <name>IBiometricsFingerprintRbs</name>
+            <name>IGoodixFingerprintDaemon</name>
             <instance>default</instance>
         </interface>
     </hal>
