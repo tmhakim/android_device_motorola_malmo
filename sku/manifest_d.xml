@@ -1,6 +1,6 @@
 <!--
     Input:
-        device/moto/malmo/vintf/manifest_d.xml
+        manifest_d.xml
 -->
 <manifest version="7.0" type="device">
     <hal format="aidl" override="true">
