@@ -20,8 +20,9 @@ vendor/lib64/libadsprpc.so
 # ADSP modules
 vendor/lib64/rfsa/adsp/libsns_device_mode_skel.so
 vendor/lib64/rfsa/adsp/libsns_low_lat_stream_skel.so
-vendor/lib/rfsa/adsp/libdsp_streamer_binning.so
-vendor/lib/rfsa/adsp/libmctfengine_skel.so
+vendor/lib/rfsa/adsp/libdsp_streamer_binning.so:vendor/lib64/rfsa/adsp/libdsp_streamer_binning.so;SYMLINK=vendor/lib/rfsa/adsp/libdsp_streamer_binning.so
+vendor/lib/rfsa/adsp/libmctfengine_skel.so:vendor/lib64/rfsa/adsp/libmctfengine_skel.so;SYMLINK=vendor/lib/rfsa/adsp/libmctfengine_skel.so
+vendor/lib/rfsa/adsp/libvetx.so:vendor/lib64/rfsa/adsp/libvetx.so;SYMLINK=vendor/lib/rfsa/adsp/libvetx.so
 
 # ANT+
 vendor/lib64/hw/com.dsi.ant@1.0-impl.so
