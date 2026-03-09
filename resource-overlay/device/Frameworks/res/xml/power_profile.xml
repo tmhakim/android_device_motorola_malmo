@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-     SPDX-FileCopyrightText: The Linux Foundation
-     SPDX-License-Identifier: BSD-3-Clause
--->
 <device name="Android">
     <item name="none">0</item>
-    <item name="screen.on.display0">47.12</item>
-    <item name="screen.full.display0">310.48</item>
-    <item name="wifi.on">1.78</item>
-    <item name="wifi.active">88.58</item>
-    <item name="wifi.scan">44.18</item>
-    <item name="camera.avg">607.96</item>
-    <item name="camera.flashlight">99.85</item>
+    <item name="screen.on">109.37</item>
+    <item name="screen.full">273.99</item>
+    <item name="wifi.on">0.299</item>
+    <item name="wifi.active">142.44</item>
+    <item name="wifi.scan">71.42</item>
+    <item name="camera.avg">400.79</item>
+    <item name="camera.flashlight">119.41</item>
     <item name="gps.on">50.69</item>
-    <item name="radio.active">284.89</item>
-    <item name="radio.scanning">35</item>
+    <item name="radio.active">187.287</item>
+    <item name="radio.scanning">48.5</item>
     <array name="radio.on">
         <value>35</value>
         <value>30</value>
@@ -23,7 +19,7 @@
         <value>15</value>
         <value>10</value>
         <value>5</value>
-        <value>1.090</value>
+        <value>1.78</value>
     </array>
     <array name="cpu.clusters.cores">
         <value>6</value>
@@ -32,53 +28,61 @@
     <array name="cpu.core_speeds.cluster0">
         <value>300000</value>
         <value>576000</value>
-        <value>710400</value>
+        <value>691200</value>
         <value>940800</value>
-        <value>1190400</value>
+        <value>1113600</value>
         <value>1324800</value>
-        <value>1478400</value>
-        <value>1574400</value>
+        <value>1516800</value>
+        <value>1651200</value>
         <value>1708800</value>
         <value>1804800</value>
+        <value>1900800</value>
+        <value>2016000</value>
     </array>
     <array name="cpu.core_speeds.cluster1">
-        <value>768000</value>
-        <value>979200</value>
-        <value>1017600</value>
-        <value>1248000</value>
+        <value>691200</value>
+        <value>940800</value>
+        <value>1228800</value>
         <value>1401600</value>
-        <value>1536000</value>
+        <value>1516800</value>
         <value>1651200</value>
         <value>1804800</value>
-        <value>2035200</value>
+        <value>1900800</value>
+        <value>2054400</value>
+        <value>2208000</value>
+        <value>2304000</value>
     </array>
     <array name="cpu.core_power.cluster0">
-        <value>22.3</value>
-        <value>25.9</value>
-        <value>27.7</value>
-        <value>32.7</value>
-        <value>36.5</value>
-        <value>39.8</value>
-        <value>43.1</value>
-        <value>51.9</value>
+        <value>23.9</value>
+        <value>26.4</value>
+        <value>27.4</value>
+        <value>32.4</value>
+        <value>35.4</value>
+        <value>40.1</value>
+        <value>45.4</value>
+        <value>52.3</value>
         <value>54.9</value>
-        <value>58.0</value>
+        <value>57.5</value>
+        <value>59.1</value>
+        <value>61.0</value>
     </array>
     <array name="cpu.core_power.cluster1">
-        <value>45.3</value>
-        <value>55.7</value>
-        <value>57.7</value>
-        <value>70.8</value>
-        <value>84.4</value>
-        <value>93.1</value>
-        <value>111.6</value>
-        <value>134.1</value>
-        <value>168.5</value>
+        <value>54.6</value>
+        <value>70.4</value>
+        <value>89.1</value>
+        <value>112.6</value>
+        <value>126.2</value>
+        <value>145.0</value>
+        <value>167.5</value>
+        <value>180.2</value>
+        <value>196.4</value>
+        <value>222.3</value>
+        <value>235.8</value>
     </array>
-    <item name="cpu.cluster_power.cluster0">0.7</item>
-    <item name="cpu.cluster_power.cluster1">6.7</item>
-    <item name="cpu.suspend">3.993</item>
-    <item name="cpu.idle">5.006</item>
-    <item name="cpu.active">4.4</item>
+    <item name="cpu.cluster_power.cluster0">1.79</item>
+    <item name="cpu.cluster_power.cluster1">3.46</item>
+    <item name="cpu.suspend">5</item>
+    <item name="cpu.idle">7.075</item>
+    <item name="cpu.active">5.125</item>
     <item name="battery.capacity">5000</item>
 </device>

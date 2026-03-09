@@ -157,7 +157,7 @@
     </integer-array>
 
     <!-- MMS user agent string -->
-    <string name="config_mms_user_agent" translatable="false">motog845g</string>
+    <string name="config_mms_user_agent" translatable="false">motog855g</string>
 
     <!-- MMS user agent prolfile url -->
     <string name="config_mms_user_agent_profile_url" translatable="false">http://uaprof.motorola.com/phoneconfig/motov1/Profile/motov1.rdf</string>
@@ -202,24 +202,10 @@
          @see https://www.w3.org/TR/SVG/paths.html#PathData
          -->
     <string name="config_mainBuiltInDisplayCutout" translatable="false">
-        M 507,63
-        a 33,33 0 1 0 66,0
-        a 33,33 0 1 0 -66,0
-        Z
-        @left
-    </string>
-
-    <!-- Like config_mainBuiltInDisplayCutout, but this path is used to report the
-         one single bounding rect per device edge to the app via
-         {@link DisplayCutout#getBoundingRect}. Note that this path should try to match the visual
-         appearance of the cutout as much as possible, and may be smaller than
-         config_mainBuiltInDisplayCutout
-         -->
-    <string name="config_mainBuiltInDisplayCutoutRectApproximation" translatable="false">
-        M -33 0
-        L -33 126
-        L 33 126
-        L 33 0
+        M -38,0
+        L 38,0
+        L 38,108
+        L -38,108
         Z
     </string>
 
