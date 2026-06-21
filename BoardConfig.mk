@@ -41,28 +41,13 @@ BOARD_KERNEL_CMDLINE := \
     pcie_ports=compat \
     service_locator.enable=1 \
     swiotlb=0
+BOARD_KERNEL_CMDLINE += androidboot.hab.product=malmo
 BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_SEPARATED_DTBO := true
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_RAMDISK_USE_LZ4 := true
 TARGET_KERNEL_NO_GCC := true
-TARGET_KERNEL_SOURCE := kernel/motorola/sm6375
-TARGET_KERNEL_CONFIG := vendor/holi-qgki_defconfig vendor/ext_config/lineage_moto-blair.config # T.O.D.O
-BOARD_KERNEL_CMDLINE += androidboot.hab.product=malmo
-TARGET_KERNEL_CONFIG += vendor/ext_config/moto-blair-malmo.config
-
-# Kernel Modules
-BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(DEVICE_PATH)/modules.blocklist
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES_BLOCKLIST_FILE := $(BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE)
-BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules.load.system_dlkm))
-SYSTEM_KERNEL_MODULES := $(BOARD_SYSTEM_KERNEL_MODULES_LOAD)
-BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules.load.recovery))
-BOOT_KERNEL_MODULES := $(BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD)
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules.load.vendor_boot))
-BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules.load.vendor_dlkm))
-BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(DEVICE_PATH)/modules.blocklist.vendor_dlkm
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES_BLOCKLIST_FILE := $(BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE)
 
 # Kernel (prebuilt)
 PREBUILT_PATH := device/motorola/kernel
@@ -71,7 +56,7 @@ TARGET_KERNEL_SOURCE := $(PREBUILT_PATH)/kernel-headers
 BOARD_PREBUILT_DTBIMAGE_DIR := $(PREBUILT_PATH)/images/dtb/
 BOARD_PREBUILT_DTBOIMAGE := $(PREBUILT_PATH)/images/dtbo.img
 PRODUCT_COPY_FILES += \
-        $(PREBUILT_PATH)/images/kernel:kernel
+    $(PREBUILT_PATH)/images/kernel:kernel
 
 # Kernel modules
 DLKM_MODULES_PATH := $(PREBUILT_PATH)/vendor_dlkm
@@ -87,7 +72,7 @@ BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(DLKM_MODULES_PATH)/modules.block
 
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(wildcard $(RAMDISK_MODULES_PATH)/*.ko)
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(patsubst %,$(RAMDISK_MODULES_PATH)/%,$(shell cat $(RAMDISK_MODULES_PATH)/modules.load))
-BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD  := $(patsubst %,$(RAMDISK_MODULES_PATH)/%,$(shell cat $(RAMDISK_MODULES_PATH)/modules.load.recovery))
+BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(patsubst %,$(RAMDISK_MODULES_PATH)/%,$(shell cat $(RAMDISK_MODULES_PATH)/modules.load.recovery))
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES_BLOCKLIST_FILE := $(RAMDISK_MODULES_PATH)/modules.blocklist
 
 # Platform
@@ -96,10 +81,10 @@ TARGET_BOARD_PLATFORM := blair
 
 BOARD_ROOT_EXTRA_SYMLINKS := \
     /vendor/fsg:/fsg
-	
+
 # GPS
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := default
-	
+
 # HIDL
 ODM_MANIFEST_SKUS += b d de dn n
 ODM_MANIFEST_B_FILES := $(DEVICE_PATH)/sku/manifest_b.xml
@@ -201,7 +186,6 @@ BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 # Security
 BOOT_SECURITY_PATCH := 2026-01-01
 VENDOR_SECURITY_PATCH := $(BOOT_SECURITY_PATCH)
-
 
 # Verified Boot
 BOARD_AVB_ENABLE := true
