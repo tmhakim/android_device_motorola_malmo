@@ -38,10 +38,6 @@ TARGET_SCREEN_WIDTH := 1080
 # Screen
 TARGET_SCREEN_DENSITY := 400
 
-# Device ID attestation
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.software.device_id_attestation.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.device_id_attestation.xml
-
 # AAPT
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := 400dpi
@@ -99,7 +95,7 @@ AB_OTA_POSTINSTALL_CONFIG += \
 PRODUCT_PACKAGES += \
     checkpoint_gc \
     otapreopt_script
-	
+
 # Audio
 PRODUCT_PACKAGES += \
     android.hardware.audio@6.0-impl \
@@ -126,7 +122,7 @@ PRODUCT_PACKAGES += \
     libspkrprot \
     libvolumelistener \
     sound_trigger.primary.blair
-	
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/audio_io_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_io_policy.conf \
     $(LOCAL_PATH)/audio/audio_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info.xml \
@@ -139,11 +135,11 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/bluetooth_hearing_aid_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_hearing_aid_audio_policy_configuration.xml \
     $(LOCAL_PATH)/audio/sound_trigger_mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_mixer_paths.xml \
     $(LOCAL_PATH)/audio/sound_trigger_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_platform_info.xml
-	
+
 PRODUCT_COPY_FILES += \
     frameworks/av/services/audiopolicy/config/bluetooth_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_audio_policy_configuration.xml \
     frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/r_submix_audio_policy_configuration.xml
-	
+
 # Additional native libraries
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt \
@@ -176,23 +172,23 @@ $(foreach f,$(wildcard $(LOCAL_PATH)/rootdir/bin/*.sh),\
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/root/init.recovery.qcom.rc:recovery/root/init.recovery.qcom.rc
-	
+
 PRODUCT_PACKAGES += \
     init.mmi.overlay.rc
-	
+
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm-service.clearkey
-	
+
 # IPACM
 PRODUCT_PACKAGES += \
     ipacm \
     IPACM_cfg.xml
-	
+
 # IPC router config
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sec_config:$(TARGET_COPY_OUT_VENDOR)/etc/sec_config
-	
+
 # Kernel
 PRODUCT_ENABLE_UFFD_GC := true
 
@@ -210,7 +206,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     vendor.lineage.livedisplay-service.sdm \
     vendor.lineage.livedisplay-service.sysfs
-	
+
 $(call soong_config_set_bool,livedisplay_sysfs,enable_af,true)
 $(call soong_config_set_bool,livedisplay_sdm,enable_dm,false)
 $(call soong_config_set_bool,livedisplay_sysfs,enable_se,true)
@@ -226,7 +222,7 @@ PRODUCT_PACKAGES += \
     vendor.lineage.health-service.default
 
 $(call soong_config_set,lineage_health,charging_control_charging_path,/sys/module/qpnp_adaptive_charge/parameters/charging_enabled)
-	
+
 # fastbootd
 PRODUCT_PACKAGES += \
     fastbootd
@@ -246,7 +242,7 @@ $(call soong_config_set_bool,stagefright,target_disable_thumbnail_block_model,tr
 PRODUCT_PACKAGES += \
     MotoActions \
     MotoCommonOverlay
-	
+
 # Framework detect
 PRODUCT_PACKAGES += \
     libvndfwk_detect_jni.qti.vendor # Needed by CNE app
@@ -305,7 +301,7 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += \
     android.hardware.hardware_keystore.km41.xml
-	
+
 DEVICE_SKUS := b d f
 
 PRODUCT_COPY_FILES += \
@@ -320,7 +316,7 @@ ESE_DEVICE_SKUS := de
 
 PRODUCT_COPY_FILES += \
 $(foreach DEVICE_SKU, $(ESE_DEVICE_SKUS), \
-    frameworks/native/data/etc/android.hardware.se.omapi.ese.xml:$(TARGET_COPY_OUT_ODM)/etc/permissions/sku_$(ESE_DEVICE_SKU)/android.hardware.se.omapi.ese.xml)
+    frameworks/native/data/etc/android.hardware.se.omapi.ese.xml:$(TARGET_COPY_OUT_ODM)/etc/permissions/sku_$(DEVICE_SKU)/android.hardware.se.omapi.ese.xml)
 
 NFC_DEVICE_SKUS := dn n
 
@@ -448,6 +444,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_cfg.ini \
     $(LOCAL_PATH)/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf \
     $(LOCAL_PATH)/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf
-	
+
 # Inherit from vendor blobs
 $(call inherit-product, vendor/motorola/malmo/malmo-vendor.mk)
